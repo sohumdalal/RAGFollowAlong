@@ -8,6 +8,7 @@ from app.utils.helper_functions import chunk_text, build_prompt, construct_messa
 
 PINECONE_INDEX_NAME = 'index237'
 
+
 @api_blueprint.route('/handle-query', methods=['POST'])
 def handle_query():
     question = request.json['question']

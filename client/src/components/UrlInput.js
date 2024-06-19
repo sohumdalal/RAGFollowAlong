@@ -9,7 +9,7 @@ function UrlInput({ onSubmit }) {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch('http://127.0.0.1:5000/embed-and-store', {
+      const response = await fetch('/embed-and-store', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
