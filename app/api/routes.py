@@ -23,3 +23,8 @@ def embed_and_store():
         "message": "Chunks embedded and stored successfully"
     }
     return jsonify(response_json)
+
+@api_blueprint.route('/delete-index', methods=['POST'])
+def delete_index():
+    pinecone_service.delete_index(PINECONE_INDEX_NAME)
+    return jsonify({"message": f"Index {PINECONE_INDEX_NAME} deleted successfully"})
