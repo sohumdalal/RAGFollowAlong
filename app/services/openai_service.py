@@ -36,11 +36,20 @@ def get_embedding(chunk):
     return embedding
 
 
-def get_llm_answer(prompt):
-  # Aggregate a messages array to send to the LLM
+def get_llm_answer(prompt, chat_history):
+  
   messages = [{"role": "system", "content": "You are a helpful assistant."}]
-  messages.append({"role": "user", "content": prompt})
-  # Send the payload to the LLM to retrieve an answer
+  # Pass in the entire chat history
+
+  for message in chat_history:
+    if message['isBot']:
+      messages.append({"role": "system", "content": message["text"]})
+    else:
+      messages.append({"role": "user", "content": message["text"]})
+
+  # Replace last message with the full prompt
+  messages[-1]["content"] = prompt
+
   url = 'https://api.openai.com/v1/chat/completions'
   headers = {
       'content-type': 'application/json; charset=utf-8',
@@ -53,8 +62,6 @@ def get_llm_answer(prompt):
       'max_tokens': 1000
   }
   response = requests.post(url, headers=headers, data=json.dumps(data))
-  
-  # return the final answer
   response_json = response.json()
   completion = response_json["choices"][0]["message"]["content"]
   return completion
