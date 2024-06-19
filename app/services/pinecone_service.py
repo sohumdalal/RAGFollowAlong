@@ -47,8 +47,9 @@ def get_most_similar_chunks_for_query(query, index_name):
 
     print("\nQuerying Pinecone index ...")
     index = pc.Index(index_name)
-    query_results = index.query(question_embedding, top_k=3, include_metadata=True)
+    query_results = index.query(vector=question_embedding, top_k=3, include_metadata=True)
     context_chunks = [x['metadata']['chunk_text'] for x in query_results['matches']]
+
 
     return context_chunks   
 
