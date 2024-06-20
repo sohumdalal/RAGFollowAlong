@@ -13,14 +13,15 @@ PINECONE_INDEX_NAME = 'index237'
 def handle_query():
     question = request.json['question']
     chat_history = request.json['chatHistory']
-    
-    # Get the most similar chunks from Pinecone
     context_chunks = pinecone_service.get_most_similar_chunks_for_query(question, PINECONE_INDEX_NAME)
     
-    # Build the payload to send to OpenAI
-    headers, data = openai_service.construct_llm_payload(question, context_chunks, chat_history)
+    # prompt = build_prompt(question, context_chunks)
+    # print("\n==== PROMPT ====\n")
+    # print(prompt)
+    # answer = openai_service.get_llm_answer(prompt)
+    # return jsonify({ "question": question, "answer": answer }) 
 
-    # Send to OpenAI's LLM to generate a completion
+    headers, data = openai_service.construct_llm_payload(question, context_chunks, chat_history)
     def generate():
         url = 'https://api.openai.com/v1/chat/completions'
         response = requests.post(url, headers=headers, data=json.dumps(data), stream=True)
@@ -33,7 +34,6 @@ def handle_query():
                 except:
                     yield('')
     
-    # Return the streamed response from the LLM to the frontend
     return Response(stream_with_context(generate()))
 
 @api_blueprint.route('/embed-and-store', methods=['POST'])
@@ -50,6 +50,5 @@ def embed_and_store():
 
 @api_blueprint.route('/delete-index', methods=['POST'])
 def delete_index():
-    print("I am in the delete index function")
     pinecone_service.delete_index(PINECONE_INDEX_NAME)
     return jsonify({"message": f"Index {PINECONE_INDEX_NAME} deleted successfully"})
