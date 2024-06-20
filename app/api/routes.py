@@ -38,6 +38,7 @@ def handle_query():
 
 @api_blueprint.route('/embed-and-store', methods=['POST'])
 def embed_and_store():
+    print("I am in the delete index function")
     url = request.json['url']
     url_text = scraping_service.scrape_website(url)
     chunks = chunk_text(url_text)
@@ -49,5 +50,6 @@ def embed_and_store():
 
 @api_blueprint.route('/delete-index', methods=['POST'])
 def delete_index():
+    print("I am in the delete index function")
     pinecone_service.delete_index(PINECONE_INDEX_NAME)
     return jsonify({"message": f"Index {PINECONE_INDEX_NAME} deleted successfully"})

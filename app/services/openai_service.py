@@ -2,6 +2,7 @@ import json
 import requests
 from openai import OpenAI
 from dotenv import load_dotenv
+from app.utils.helper_functions import build_prompt, construct_messages_list
 import os
 load_dotenv()
 

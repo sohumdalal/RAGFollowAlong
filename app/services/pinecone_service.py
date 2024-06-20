@@ -54,5 +54,8 @@ def get_most_similar_chunks_for_query(query, index_name):
     return context_chunks   
 
 def delete_index(index_name):
-  if index_name in pinecone.list_indexes():
-    pc.delete_index(name=index_name)
+    print("I am in the delete index function within pinecone")
+    if index_name in pc.list_indexes():
+        print("conditional met")
+        pc.delete_index(name=index_name)
+        print("index deleted")
