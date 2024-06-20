@@ -4,13 +4,13 @@ import ChatInterface from './components/ChatInterface';
 
 function App() {
   const [showChat, setShowChat] = useState(false); // Add state to control UI transition
+
   const handleUrlSubmitted = () => {
-    console.log("here i am")
     setShowChat(true); // Transition to the ChatInterface
   };
 
-  // Delete the Pinecone index when the user leaves the page
   useEffect(() => {
+    // This effect will run when the component is unmounted (page refresh or navigating to a new page)
     return () => {
       fetch('http://127.0.0.1:5000/delete-index', {
         method: 'POST',

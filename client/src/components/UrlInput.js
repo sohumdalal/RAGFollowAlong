@@ -1,3 +1,4 @@
+// src/components/UrlInput.js
 import React, { useState } from 'react';
 
 function UrlInput({ onSubmit }) {
@@ -8,6 +9,7 @@ function UrlInput({ onSubmit }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const response = await fetch('http://127.0.0.1:5000/embed-and-store', {
         method: 'POST',
@@ -16,11 +18,15 @@ function UrlInput({ onSubmit }) {
         },
         body: JSON.stringify({ url }),
       });
+
       if (response.ok) {
         const data = await response.json();
+        // Assuming the backend responds with a message
         setResponseMessage(data.message);
+        // Callback to App.js to trigger UI transition
         onSubmit();
       } else {
+        // Handle error responses here
         setResponseMessage('Error: Something went wrong.');
       }
     } catch (error) {

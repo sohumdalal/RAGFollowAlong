@@ -5,17 +5,19 @@ function ChatInterface() {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const messagesEndRef = useRef(null);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(scrollToBottom, [messages]);
 
-const handleSendMessage = async (event) => {
+  const handleSendMessage = async (event) => {
     event.preventDefault();
-
-    if (!inputText.trim()) return; 
-
+    if (!inputText.trim()) return; // Prevent sending empty messages
+    
+    // Get a snapshot of the current messages + the user's message
+    // to send to the server to get an answer
     const userMessage = { text: inputText, isBot: false };
     const body = {
       chatHistory: [...messages, userMessage],
@@ -34,6 +36,7 @@ const handleSendMessage = async (event) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     });
+
     if (!response.body) return;
 
     // Set up the infrastructure to stream the response data
@@ -80,6 +83,7 @@ const handleSendMessage = async (event) => {
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
         />
+
       </form>
     </div>
   );
