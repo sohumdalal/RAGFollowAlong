@@ -23,9 +23,6 @@ def get_embedding(chunk):
   response = requests.post(url, headers=headers, data=json.dumps(data))  
   response_json = response.json()
   embedding = response_json["data"][0]["embedding"]
-  # response = openai_client.embeddings.create(
-  #     input=chunk, model=OPENAI_EMBEDDING_MODEL)
-  # embedding = response.data[0].embedding
   return embedding
 
 def get_llm_answer(prompt):
