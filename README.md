@@ -1,13 +1,17 @@
-Here is my following of Ashwin Kumar's Full-Stack LLM Application. Here are some key adds on my end:
+**Summary**
 
-1. CORS Handling
+I followed Ashwin Kumar's tutorial on building a full stack LLM app using RAG.
 
+Here are some key adds on my end:
 
-2. Updated Pincone access
+**1. CORS Handling
+**
 
+**2. Updated Pincone access
+**
 
-3. OPENAI Service access
-
+**3. OPENAI Service access
+**
 
 Here are links to Ashwin's original posts:
 https://shwinda.medium.com/build-a-full-stack-llm-application-with-openai-flask-react-and-pinecone-part-1-f3844429a5ef
