@@ -46,7 +46,7 @@ cd client
 npm start
 ```
 <br></br>
-Below are some items that either included or wanted to make note of. 
+Below are some items that I either included or wanted to make note of. 
 
 1. CORS Handling
     - Had some CORS issues earlier on, so I decided to manually include headers with all outgoing responses.
