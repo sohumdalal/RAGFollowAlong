@@ -1,6 +1,8 @@
 **Summary**
 
-I followed Ashwin Kumar's tutorial on building a full stack LLM app leveraging RAG. Here is a breakdown of the app:
+Hello friends! I followed a colleague's tutorial on building a full stack LLM app leveraging Retrieval-Augmented Generation (RAG). His name is Ashwin Kumar, and his tutorial is an excellent introduction to RAG and its impact on creating LLM chatbots. 
+
+**Here is a breakdown of the app:**
 
 1. The client sends a URL via an HTTP POST request to the Flask server (see client/src/components/UrlInput.js)
 
@@ -11,24 +13,44 @@ I followed Ashwin Kumar's tutorial on building a full stack LLM app leveraging R
 4. The chatbot is now ready to take questions. The handleSendMessage function (see client/src/components/ChatInterface.js) captures the user's message and sends it to the server. It then appends a placeholder bot message to the chat history and streams the server's response to update the bot message dynamically, ensuring smooth and continuous message updates, similar to ChatGPT
 
 5. Once the handle-query POST request (triggered by handleSendMessage) reaches the server, the handle_query route handler retrieves the user's question and chat history. It uses functions to find the most relevant context chunks from Pinecone and constructs a payload to send to OpenAI's API for a response. The payload construction function can also adjust the model and its preferences. The final step of this route handler streams the response from OpenAI back to the client in real-time
+<br></br>
 
+**Here are some key notes on my end:**
 
-Here are some key adds on my end:
+1. CORS Handling
+    - Had some CORS issues earlier on, so I decided to manually include headers with all outgoing responses.
 
-**1. CORS Handling
-**
+2. Updated Pincone access
+    - Pinecone's pc.init is deprecated. [Docs](https://docs.pinecone.io/guides/get-started/quickstart) prefer you instantiate a new pc variable as such:
+    
+      ```
+      pc = Pinecone(api_key=PINECONE_API_KEY)
+      ```
+     - You can then create indexes as such:
 
-**2. Updated Pincone access
-**
+        ```
+        if index_name not in pc.list_indexes().names():
+          pc.create_index(
+            name=index_name,
+            dimension=EMBEDDING_DIMENSION,
+            metric='cosine',
+            spec=ServerlessSpec(
+                cloud='#someCloud',
+                region='#someRegion'  
+            )
+        )
+        ```
+3. OPENAI Service access
 
-**3. OPENAI Service access
-**
+   - Make sure you have a small amount of money in your account. Free tier access is always changing.
+<br></br>
 
 Here are links to Ashwin's original posts:
 
 - https://shwinda.medium.com/build-a-full-stack-llm-application-with-openai-flask-react-and-pinecone-part-1-f3844429a5ef
 
 - https://shwinda.medium.com/build-a-full-stack-llm-application-with-openai-flask-react-and-pinecone-part-2-ceda4e290c33
+
 
 Follow Ashwin's Github:
 - https://github.com/ashnkumar
