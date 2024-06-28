@@ -15,7 +15,36 @@ Hello friends! I followed a colleague's tutorial on building a full stack LLM ap
 5. Once the handle-query POST request (triggered by handleSendMessage) reaches the server, the handle_query route handler retrieves the user's question and chat history. It uses functions to find the most relevant context chunks from Pinecone and constructs a payload to send to OpenAI's API for a response. The payload construction function can also adjust the model and its preferences. The final step of this route handler streams the response from OpenAI back to the client in real-time
 <br></br>
 
-**Here are some key notes on my end:**
+
+I encouraged ya'll give the app a try. You can look at Ashwin's github for starter steps, but they are also copied here:
+
+Install Python dependencies
+```
+pip install -r requirements.txt
+```
+
+Install React dependencies
+```
+cd client
+npm install
+```
+Create .env file
+```
+OPENAI_API_KEY=<YOUR_API_KEY>
+PINECONE_API_KEY=<YOUR_API_KEY>
+```
+Start the Flask server
+```
+# In root directory
+python run.py
+```
+Start the React app
+```
+cd client
+npm start
+```
+<br></br>
+Below are some items that either included or wanted to make note of. 
 
 1. CORS Handling
     - Had some CORS issues earlier on, so I decided to manually include headers with all outgoing responses.
