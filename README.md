@@ -8,17 +8,19 @@ Hello friends! I followed a colleague's tutorial on building a full stack LLM ap
 
 2. The server receives the URL at an endpoint (see app/api/routes.py), scrapes/parses the URL using BeautifulSoup, and then chunks it into segments of 200 characters (see app/utils/helper_functions.py).
 
-3. The chunks are sent to the embed_chunks_and_upload_to_pinecone function (see app/services/pinecone_service.py). This function creates a new Pinecone index, embeds the text chunks into vectors using OpenAI, and uploads these vectors to the index, including metadata for each chunk, ensuring the index is fresh by deleting any existing one with the same name.
+3. The chunks are sent to the "embed_chunks_and_upload_to_pinecone" function (see app/services/pinecone_service.py). This function creates a new Pinecone index, embeds the text chunks into vectors using OpenAI, and uploads these vectors to the index, including metadata for each chunk, ensuring the index is fresh by deleting any existing one with the same name.
 
-4. The chatbot is now ready to take questions. The handleSendMessage function (see client/src/components/ChatInterface.js) captures the user's message and sends it to the server. It then appends a placeholder bot message to the chat history and streams the server's response to update the bot message dynamically, ensuring smooth and continuous message updates, similar to ChatGPT.
+4. The chatbot is now ready to take questions. The "handleSendMessage" function (see client/src/components/ChatInterface.js) captures the user's message and sends it to the server. It then appends a placeholder bot message to the chat history and streams the server's response to update the bot message dynamically, ensuring smooth and continuous message updates, similar to ChatGPT.
 
-5. Once the handle-query POST request (triggered by handleSendMessage) reaches the server, the handle_query route handler retrieves the user's question and chat history. It uses functions to find the most relevant context chunks from Pinecone and constructs a payload to send to OpenAI's API for a response. The payload construction function can also adjust the model and its preferences.
+5. Once the "handle-query" POST request (triggered by "handleSendMessage") reaches the server, the handle_query route handler retrieves the user's question and chat history. It then does two things for us.
+    1. The functions finds the most relevant context chunks from Pinecone
+    2. It then uses the chunks to constructs a payload to send to OpenAI's API for a response. Note thatthe payload construction function can also adjust the model and its         preferences.
 
-6. The final step of this route handler streams the response from OpenAI back to the client in real-time.
+8. The final step of this route handler streams the response from OpenAI back to the client in real-time.
 <br></br>
 
 
-I encouraged ya'll give the app a try. You can look at Ashwin's github for starter steps, but they are also copied here:
+I encouraged ya'll to give the app a try. You can look at Ashwin's github for starter steps, but they are also copied here:
 
 Install Python dependencies
 ```
