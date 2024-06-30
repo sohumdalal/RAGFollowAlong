@@ -12,11 +12,12 @@ Hello friends! I followed a colleague's tutorial on building a full stack LLM ap
 
 4. The chatbot is now ready to take questions. The "handleSendMessage" function (see client/src/components/ChatInterface.js) captures the user's message and sends it to the server. It then appends a placeholder bot message to the chat history and streams the server's response to update the bot message dynamically, ensuring smooth and continuous message updates, similar to ChatGPT.
 
-5. Once the "handle-query" POST request (triggered by "handleSendMessage") reaches the server, the handle_query route handler retrieves the user's question and chat history. It then does two things for us.
-    1. The functions finds the most relevant context chunks from Pinecone
-    2. It then uses the chunks to constructs a payload to send to OpenAI's API for a response. Note thatthe payload construction function can also adjust the model and its         preferences.
+5. Once the "handle-query" POST request (triggered by "handleSendMessage") reaches the server, the handle_query route handler retrieves the user's question and chat history. Three big things are happening for us:
+    1. The "context_chunks" varaiable calls a pinecone service function to find the most relevant context chunks from Pinecone
+    2. It then uses the chunks to constructs a payload to send to OpenAI's API for a response. Note thatthe payload construction function can also adjust the model and itspreferences.
+    3. the payload ("header","data") is then sent to OPENAI to generate a response.
 
-8. The final step of this route handler streams the response from OpenAI back to the client in real-time.
+6. The final step of this route handler streams the response from OpenAI back to the client in real-time.
 <br></br>
 
 
